@@ -7,6 +7,7 @@ REPO_PATH=stolon
 
 VERSION ?= $(shell scripts/git-version.sh)
 
+# LD_FLAGS="-w -X $(REPO_PATH)/cmd.Version=$(VERSION)"
 LD_FLAGS="-w -X $(REPO_PATH)/cmd.Version=$(VERSION)"
 
 $(shell mkdir -p bin )
