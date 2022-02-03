@@ -22,9 +22,10 @@ import (
 	"strings"
 	"time"
 
+	"stolon/internal/common"
+	util "stolon/internal/postgresql"
+
 	"github.com/mitchellh/copystructure"
-	"github.com/sorintlab/stolon/internal/common"
-	util "github.com/sorintlab/stolon/internal/postgresql"
 )
 
 func Uint16P(u uint16) *uint16 {

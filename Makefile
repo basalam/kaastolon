@@ -3,7 +3,7 @@ PROJDIR=$(dir $(realpath $(firstword $(MAKEFILE_LIST))))
 # change to project dir so we can express all as relative paths
 $(shell cd $(PROJDIR))
 
-REPO_PATH=github.com/sorintlab/stolon
+REPO_PATH=stolon
 
 VERSION ?= $(shell scripts/git-version.sh)
 

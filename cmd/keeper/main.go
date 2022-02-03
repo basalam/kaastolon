@@ -15,7 +15,7 @@
 package main
 
 import (
-	"github.com/sorintlab/stolon/cmd/keeper/cmd"
+	"stolon/cmd/keeper/cmd"
 )
 
 func main() {

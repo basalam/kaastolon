@@ -18,9 +18,9 @@ import (
 	"context"
 	"os"
 
-	cmdcommon "github.com/sorintlab/stolon/cmd"
-	"github.com/sorintlab/stolon/internal/cluster"
-	"github.com/sorintlab/stolon/internal/store"
+	cmdcommon "stolon/cmd"
+	"stolon/internal/cluster"
+	"stolon/internal/store"
 
 	"github.com/spf13/cobra"
 )

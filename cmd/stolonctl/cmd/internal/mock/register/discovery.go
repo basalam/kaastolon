@@ -7,8 +7,8 @@ package mock_register
 import (
 	gomock "github.com/golang/mock/gomock"
 	api "github.com/hashicorp/consul/api"
-	register "github.com/sorintlab/stolon/cmd/stolonctl/cmd/register"
 	reflect "reflect"
+	register "stolon/cmd/stolonctl/cmd/register"
 )
 
 // MockServiceDiscovery is a mock of ServiceDiscovery interface

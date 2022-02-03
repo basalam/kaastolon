@@ -20,8 +20,8 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/sorintlab/stolon/internal/cluster"
-	"github.com/sorintlab/stolon/internal/util"
+	"stolon/internal/cluster"
+	"stolon/internal/util"
 
 	jsonpatch "github.com/evanphx/json-patch"
 	v1 "k8s.io/api/core/v1"

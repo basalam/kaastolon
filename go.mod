@@ -1,4 +1,4 @@
-module github.com/sorintlab/stolon
+module stolon
 
 require (
 	github.com/coreos/bbolt v1.3.3 // indirect

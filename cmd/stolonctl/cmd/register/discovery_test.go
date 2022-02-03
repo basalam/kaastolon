@@ -18,10 +18,11 @@ import (
 	"errors"
 	"testing"
 
+	mock_register "stolon/cmd/stolonctl/cmd/internal/mock/register"
+	"stolon/cmd/stolonctl/cmd/register"
+
 	"github.com/golang/mock/gomock"
 	"github.com/hashicorp/consul/api"
-	"github.com/sorintlab/stolon/cmd/stolonctl/cmd/internal/mock/register"
-	"github.com/sorintlab/stolon/cmd/stolonctl/cmd/register"
 )
 
 func TestNewServiceDiscovery(t *testing.T) {

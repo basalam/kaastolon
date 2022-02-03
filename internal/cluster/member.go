@@ -18,7 +18,7 @@ import (
 	"reflect"
 	"time"
 
-	"github.com/sorintlab/stolon/internal/common"
+	"stolon/internal/common"
 
 	"github.com/mitchellh/copystructure"
 )

@@ -22,17 +22,19 @@ import (
 	"sync"
 	"time"
 
+	"stolon/cmd"
+	"stolon/internal/cluster"
+	"stolon/internal/common"
+	"stolon/internal/flagutil"
+	slog "stolon/internal/log"
+	"stolon/internal/store"
+	"stolon/internal/util"
+
 	"github.com/prometheus/client_golang/prometheus/promhttp"
-	"github.com/sorintlab/stolon/cmd"
-	"github.com/sorintlab/stolon/internal/cluster"
-	"github.com/sorintlab/stolon/internal/common"
-	"github.com/sorintlab/stolon/internal/flagutil"
-	slog "github.com/sorintlab/stolon/internal/log"
-	"github.com/sorintlab/stolon/internal/store"
-	"github.com/sorintlab/stolon/internal/util"
+
+	"github.com/sorintlab/pollon"
 
 	"github.com/davecgh/go-spew/spew"
-	"github.com/sorintlab/pollon"
 	"github.com/spf13/cobra"
 	"go.uber.org/zap"
 )

@@ -23,10 +23,11 @@ import (
 	"testing"
 	"time"
 
+	"stolon/internal/cluster"
+	"stolon/internal/common"
+	"stolon/internal/store"
+
 	uuid "github.com/satori/go.uuid"
-	"github.com/sorintlab/stolon/internal/cluster"
-	"github.com/sorintlab/stolon/internal/common"
-	"github.com/sorintlab/stolon/internal/store"
 )
 
 func TestInit(t *testing.T) {

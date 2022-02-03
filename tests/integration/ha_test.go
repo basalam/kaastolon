@@ -26,11 +26,12 @@ import (
 	"testing"
 	"time"
 
+	"stolon/internal/cluster"
+	"stolon/internal/common"
+	pg "stolon/internal/postgresql"
+	"stolon/internal/store"
+
 	uuid "github.com/satori/go.uuid"
-	"github.com/sorintlab/stolon/internal/cluster"
-	"github.com/sorintlab/stolon/internal/common"
-	pg "github.com/sorintlab/stolon/internal/postgresql"
-	"github.com/sorintlab/stolon/internal/store"
 )
 
 const (

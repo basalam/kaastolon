@@ -6,8 +6,8 @@ package mocks
 
 import (
 	gomock "github.com/golang/mock/gomock"
-	postgresql "github.com/sorintlab/stolon/internal/postgresql"
 	reflect "reflect"
+	postgresql "stolon/internal/postgresql"
 )
 
 // MockPGManager is a mock of PGManager interface

@@ -18,8 +18,9 @@ import (
 	"reflect"
 	"testing"
 
+	"stolon/internal/cluster"
+
 	"github.com/hashicorp/consul/api"
-	"github.com/sorintlab/stolon/internal/cluster"
 )
 
 func TestNewServiceInfo(t *testing.T) {

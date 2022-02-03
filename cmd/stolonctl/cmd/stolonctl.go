@@ -21,10 +21,10 @@ import (
 	"os"
 	"strings"
 
-	"github.com/sorintlab/stolon/cmd"
-	"github.com/sorintlab/stolon/internal/cluster"
-	"github.com/sorintlab/stolon/internal/flagutil"
-	"github.com/sorintlab/stolon/internal/store"
+	"stolon/cmd"
+	"stolon/internal/cluster"
+	"stolon/internal/flagutil"
+	"stolon/internal/store"
 
 	"github.com/spf13/cobra"
 )

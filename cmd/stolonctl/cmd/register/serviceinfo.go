@@ -21,8 +21,9 @@ import (
 	"strconv"
 	"strings"
 
+	"stolon/internal/cluster"
+
 	"github.com/hashicorp/consul/api"
-	"github.com/sorintlab/stolon/internal/cluster"
 )
 
 // HealthCheck holds necessary information for performing

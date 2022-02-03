@@ -24,11 +24,11 @@ import (
 	"testing"
 	"time"
 
-	"github.com/sorintlab/stolon/internal/cluster"
-	"github.com/sorintlab/stolon/internal/common"
-	"github.com/sorintlab/stolon/internal/store"
+	"stolon/internal/cluster"
+	"stolon/internal/common"
+	"stolon/internal/store"
 
-	"github.com/satori/go.uuid"
+	uuid "github.com/satori/go.uuid"
 )
 
 func TestProxyListening(t *testing.T) {

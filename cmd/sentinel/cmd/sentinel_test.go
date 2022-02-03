@@ -22,9 +22,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/sorintlab/stolon/internal/cluster"
-	"github.com/sorintlab/stolon/internal/common"
-	"github.com/sorintlab/stolon/internal/timer"
+	"stolon/internal/cluster"
+	"stolon/internal/common"
+	"stolon/internal/timer"
 
 	"github.com/davecgh/go-spew/spew"
 	"github.com/google/go-cmp/cmp"
