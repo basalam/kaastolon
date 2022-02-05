@@ -1,10 +1,10 @@
 # kaastolon a fork of stolon - PostgreSQL cloud native High Availability
 
-[![Build Status](https://run.agola.io/api/v1alpha/badges/org%2Fbasalam%2Fkaasstolon?branch=master)](https://run.agola.io/org/basalam/projects/kaasstolon.proj)
+[![Build Status](https://run.agola.io/api/v1alpha/badges/org%2Fbasalam%2Fkaastolon?branch=master)](https://run.agola.io/org/basalam/projects/kaastolon.proj)
 [![Discourse](https://img.shields.io/discourse/https/talk.stolon.io/status.svg)](https://talk.stolon.io)
-[![Go Report Card](https://goreportcard.com/badge/github.com/basalam/kaasstolon)](https://goreportcard.com/report/github.com/basalam/kaasstolon)
-[![Downloads](https://img.shields.io/github/downloads/basalam/kaasstolon/latest/total.svg)](https://github.com/basalam/kaasstolon/releases)
-[![Latest release](https://img.shields.io/github/release/basalam/kaasstolon.svg)](https://github.com/basalam/kaasstolon/releases)
+[![Go Report Card](https://goreportcard.com/badge/github.com/basalam/kaastolon)](https://goreportcard.com/report/github.com/basalam/kaastolon)
+[![Downloads](https://img.shields.io/github/downloads/basalam/kaastolon/latest/total.svg)](https://github.com/basalam/kaastolon/releases)
+[![Latest release](https://img.shields.io/github/release/basalam/kaastolon.svg)](https://github.com/basalam/kaastolon/releases)
 
 ![Stolon Logo](logos/stolon-color.png)
 
@@ -13,6 +13,8 @@ stolon is a cloud native PostgreSQL manager for PostgreSQL high availability. It
 For an introduction to stolon you can also take a look at [this post](https://sgotti.me/post/stolon-introduction/)
 ## Our Features
 * an extra argument for connecting to slave nodes (in kubernetes you can add extra service and deployment for proxy with that one)
+
+#### No release & docker published package yet... will publish one
 ## Features
 
 * Leverages PostgreSQL streaming replication.
@@ -95,4 +97,4 @@ To submit your changes please open a pull request.
 ## Contacts
 
 * For general discussion about using and developing stolon, join the [stolon forum](https://talk.stolon.io)
-* For bugs and feature requests file an [issue](https://github.com/basalam/kaasstolon/issues/new/choose)
+* For bugs and feature requests file an [issue](https://github.com/basalam/kaastolon/issues/new/choose)
