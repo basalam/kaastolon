@@ -1,5 +1,3 @@
-LABEL maintainer "mhkarimi1383<karimi.dev>"
-
 ARG PGVERSION
 
 # base build image
