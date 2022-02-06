@@ -14,7 +14,7 @@ For an introduction to stolon you can also take a look at [this post](https://sg
 ## Our Features
 * an extra argument for connecting to slave nodes (in kubernetes you can add extra service and deployment for proxy with that one)
 
-#### No release & docker published package yet... will publish one
+#### Realesed and docker images are published ;)
 ## Features
 
 * Leverages PostgreSQL streaming replication.
