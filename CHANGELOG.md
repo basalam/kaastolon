@@ -1,3 +1,11 @@
+### v0.18.0
+
+#### New features
+
+* Support PostgreSQL 14 (From original repository)
+* Added slave option to proxy
+
+
 ### v0.17.0
 
 #### New features
