@@ -74,6 +74,22 @@ services:
         order: stop-first
         failure_action: rollback
 
+  slave-proxy:
+    image: ghcr.io/basalam/kaastolon:v0.18.0-pg10
+    command: gosu stolon stolon-proxy --listen-address 0.0.0.0 --cluster-name stolon-cluster --store-backend=etcdv3 --store-endpoints http://etcd-00:2379,http://etcd-01:2379,http://etcd-02:2379 --log-level info --slave-node-exposure
+    networks:
+      - etcd_etcd
+      - pgdb
+    ports:
+      - 5433:5432
+    deploy:
+      replicas: 2
+      update_config:
+        parallelism: 1
+        delay: 30s
+        order: stop-first
+        failure_action: rollback
+
 volumes:
   pgkeeper1:
     driver: local
