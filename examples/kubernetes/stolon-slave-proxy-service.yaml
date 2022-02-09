@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: stolon-slave-proxy-service
+spec:
+  ports:
+    - port: 5432
+      targetPort: 5432
+  selector:
+    component: stolon-slave-proxy
+    stolon-cluster: kube-stolon
