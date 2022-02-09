@@ -249,6 +249,7 @@ func (c *ClusterChecker) Check() error {
 
 	db, ok := cd.DBs[proxy.Spec.MasterDBUID]
 	if cfg.slaveNode {
+		log.Infow("you want slave node kaastolon is here to help you")
 		ok = false
 		for k, v := range cd.DBs {
 			if k != proxy.Spec.MasterDBUID && v.Status.Healthy {
@@ -258,7 +259,7 @@ func (c *ClusterChecker) Check() error {
 		}
 	}
 	if !ok {
-		log.Infow("no db object available, closing connections to master", "db", proxy.Spec.MasterDBUID)
+		log.Infow("no db object available, closing connections to node", "db", proxy.Spec.MasterDBUID)
 		c.sendPollonConfData(pollon.ConfData{DestAddr: nil})
 		// ignore errors on setting proxy info
 		if err = c.SetProxyInfo(c.e, proxy.Generation, proxyTimeout); err != nil {
