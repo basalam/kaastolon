@@ -1,3 +1,8 @@
+### v0.18.5
+
+#### New features
+ * Added extra logging when slave node is selected
+
 ### v0.18.0
 
 #### New features
