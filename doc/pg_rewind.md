@@ -2,6 +2,9 @@
 
 Stolon can use [pg_rewind](http://www.postgresql.org/docs/current/static/app-pgrewind.html) to speedup instance resynchronization (for example resyncing an old master or a slave ahead of the current master) without the need to copy all the new master data.
 
+## Requirements
+Before enabling it you need to set `wal_log_hints` to `"on"` in postgresql parameters
+
 ## Enabling
 
 It can be enabled setting to true the cluster specification option `usePgrewind` (defaults to false):
