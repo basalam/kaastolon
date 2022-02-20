@@ -1,3 +1,11 @@
+### v0.19.0
+
+#### New features
+ * simple round robin selection of slave nodes
+
+### v0.18.0
+
+
 ### v0.18.5
 
 #### New features

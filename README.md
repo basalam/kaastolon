@@ -17,6 +17,7 @@ stolon is a cloud native PostgreSQL manager for PostgreSQL high availability. It
 For an introduction to stolon you can also take a look at [this post](https://sgotti.me/post/stolon-introduction/)
 ## Our Features
 * an extra argument for connecting to slave nodes (in kubernetes you can add extra service and deployment for proxy with that one)
+* added simple round robin for selecting slave node
 
 #### Realesed and docker images are published ;)
 ## Features
