@@ -17,6 +17,7 @@ package cmd
 import (
 	"context"
 	"fmt"
+	"math/rand"
 	"net"
 	"net/http"
 	"sync"
@@ -249,14 +250,19 @@ func (c *ClusterChecker) Check() error {
 
 	db, ok := cd.DBs[proxy.Spec.MasterDBUID]
 	if cfg.slaveNode {
+		var slaveNodes []*cluster.DB
 		log.Infow("you want slave node kaastolon is here to help you")
 		ok = false
 		for k, v := range cd.DBs {
 			if k != proxy.Spec.MasterDBUID && v.Status.Healthy {
 				ok = true
-				db = v
+				log.Debugf("adding node %v to healthy node list", v.UID)
+				slaveNodes = append(slaveNodes, v)
 			}
 		}
+		randNum := rand.Intn(len(slaveNodes))
+		log.Infof("currently selected node is %v", slaveNodes[randNum].UID)
+		db = slaveNodes[randNum]
 	}
 	if !ok {
 		log.Infow("no db object available, closing connections to node", "db", proxy.Spec.MasterDBUID)
