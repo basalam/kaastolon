@@ -1,3 +1,8 @@
+### v0.19.1
+
+#### Bug Fixes
+* fix bug when there is no healthy slave
+
 ### v0.19.0
 
 #### New features
