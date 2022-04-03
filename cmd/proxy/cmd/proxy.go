@@ -260,9 +260,13 @@ func (c *ClusterChecker) Check() error {
 				slaveNodes = append(slaveNodes, v)
 			}
 		}
-		randNum := rand.Intn(len(slaveNodes))
-		log.Infof("currently selected node is %v", slaveNodes[randNum].UID)
-		db = slaveNodes[randNum]
+		if len(slaveNodes) >= 1 {
+			randNum := rand.Intn(len(slaveNodes))
+			log.Infof("currently selected node is %v", slaveNodes[randNum].UID)
+			db = slaveNodes[randNum]
+		} else {
+			ok = false
+		}
 	}
 	if !ok {
 		log.Infow("no db object available, closing connections to node", "db", proxy.Spec.MasterDBUID)
