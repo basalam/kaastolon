@@ -1,6 +1,5 @@
 # kaastolon a fork of stolon - PostgreSQL cloud native High Availability
 
-[![Build Status](https://run.agola.io/api/v1alpha/badges/org%2Fbasalam%2Fkaastolon?branch=master)](https://run.agola.io/org/basalam/projects/kaastolon.proj)
 [![Discourse](https://img.shields.io/discourse/https/talk.stolon.io/status.svg)](https://talk.stolon.io)
 [![Go Report Card](https://goreportcard.com/badge/github.com/basalam/kaastolon)](https://goreportcard.com/report/github.com/basalam/kaastolon)
 [![Downloads](https://img.shields.io/github/downloads/basalam/kaastolon/latest/total.svg)](https://github.com/basalam/kaastolon/releases)
