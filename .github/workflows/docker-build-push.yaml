@@ -1,9 +1,24 @@
 name: publish
 
-on: [push]
-
+on:
+  push:
+    paths-ignore:
+      - "docs/**"
+      - "examples/**"
+      - "test/**"
+      - "scripts/**"
+      - "logos/**"
+      - "***.md"
+      - "***.yml"
+      - "***.yaml"
+      - ".gitignore"
+      - ".dockerignore"
+      - "LICENSE"
+      - "DCO"
+      - "test"
 jobs:
   publish-docker-image:
+    continue-on-error: false
     runs-on: ubuntu-latest
 
     steps:
