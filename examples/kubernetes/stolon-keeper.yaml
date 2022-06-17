@@ -25,7 +25,7 @@ spec:
       terminationGracePeriodSeconds: 10
       containers:
         - name: stolon-keeper
-          image: ghcr.io/basalam/kaastolon:v0.19.1-pg10
+          image: ghcr.io/basalam/kaastolon:v0.19.2-pg10
           command:
             - "/bin/bash"
             - "-ec"

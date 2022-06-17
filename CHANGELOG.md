@@ -1,3 +1,8 @@
+### v0.19.2
+
+#### New features
+* control over loadbalance of the slave nodes
+
 ### v0.19.1
 
 #### Bug Fixes
@@ -6,15 +11,12 @@
 ### v0.19.0
 
 #### New features
- * simple round robin selection of slave nodes
-
-### v0.18.0
-
+* simple round robin selection of slave nodes
 
 ### v0.18.5
 
 #### New features
- * Added extra logging when slave node is selected
+* Added extra logging when slave node is selected
 
 ### v0.18.0
 

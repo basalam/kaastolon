@@ -20,6 +20,7 @@ import (
 	"math/rand"
 	"net"
 	"net/http"
+	"sort"
 	"sync"
 	"time"
 
@@ -60,7 +61,8 @@ type config struct {
 	keepAliveCount    int
 	keepAliveInterval int
 
-	slaveNode bool
+	slaveNode            bool
+	slaveNodeLoadBalance bool
 }
 
 var cfg config
@@ -72,11 +74,11 @@ func init() {
 	CmdProxy.PersistentFlags().StringVar(&cfg.port, "port", "5432", "proxy listening port")
 	CmdProxy.PersistentFlags().BoolVar(&cfg.stopListening, "stop-listening", true, "stop listening on store error")
 	CmdProxy.PersistentFlags().BoolVar(&cfg.debug, "debug", false, "enable debug logging")
-	CmdProxy.PersistentFlags().BoolVar(&cfg.slaveNode, "slave-node-exposure", false, "expose first slave node instead of master")
 	CmdProxy.PersistentFlags().IntVar(&cfg.keepAliveIdle, "tcp-keepalive-idle", 0, "set tcp keepalive idle (seconds)")
 	CmdProxy.PersistentFlags().IntVar(&cfg.keepAliveCount, "tcp-keepalive-count", 0, "set tcp keepalive probe count number")
 	CmdProxy.PersistentFlags().IntVar(&cfg.keepAliveInterval, "tcp-keepalive-interval", 0, "set tcp keepalive interval (seconds)")
-
+	CmdProxy.PersistentFlags().BoolVar(&cfg.slaveNode, "slave-node-exposure", false, "expose one of the slave node instead of master")
+	CmdProxy.PersistentFlags().BoolVar(&cfg.slaveNodeLoadBalance, "slave-node-load-balance", false, "weather to load balance between slave nodes or not (if true some times you cannot keep the connection to a single slave node)")
 	if err := CmdProxy.PersistentFlags().MarkDeprecated("debug", "use --log-level=debug instead"); err != nil {
 		log.Fatal(err)
 	}
@@ -261,9 +263,18 @@ func (c *ClusterChecker) Check() error {
 			}
 		}
 		if len(slaveNodes) >= 1 {
-			randNum := rand.Intn(len(slaveNodes))
-			log.Infof("currently selected node is %v", slaveNodes[randNum].UID)
-			db = slaveNodes[randNum]
+			var selectedIndex int
+			if cfg.slaveNodeLoadBalance {
+				rand.Seed(time.Now().UnixNano())
+				selectedIndex = rand.Intn(len(slaveNodes))
+			} else {
+				sort.SliceStable(slaveNodes, func(i, j int) bool {
+					return slaveNodes[i].Spec.KeeperUID < slaveNodes[j].Spec.KeeperUID
+				})
+				selectedIndex = 0
+			}
+			log.Infof("currently selected node is %v", slaveNodes[selectedIndex].UID)
+			db = slaveNodes[selectedIndex]
 		} else {
 			ok = false
 		}
