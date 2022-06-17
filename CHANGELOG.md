@@ -2,6 +2,7 @@
 
 #### New features
 * control over loadbalance of the slave nodes
+* bump up golang version to 1.18
 
 ### v0.19.1
 
