@@ -6,7 +6,7 @@ require (
 	github.com/docker/libkv v0.2.1
 	github.com/evanphx/json-patch v4.5.0+incompatible
 	github.com/golang/mock v1.4.0
-	github.com/google/go-cmp v0.4.0
+	github.com/google/go-cmp v0.5.8
 	github.com/hashicorp/consul/api v1.4.0
 	github.com/lib/pq v1.3.0
 	github.com/mattn/go-isatty v0.0.12
