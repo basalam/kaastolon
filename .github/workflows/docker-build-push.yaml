@@ -1,21 +1,8 @@
 name: publish
 
 on:
-  push:
-    paths-ignore:
-      - "docs/**"
-      - "examples/**"
-      - "test/**"
-      - "scripts/**"
-      - "logos/**"
-      - "***.md"
-      - "***.yml"
-      - "***.yaml"
-      - ".gitignore"
-      - ".dockerignore"
-      - "LICENSE"
-      - "DCO"
-      - "test"
+  push
+
 jobs:
   publish-docker-image:
     continue-on-error: false
