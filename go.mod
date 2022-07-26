@@ -5,7 +5,7 @@ require (
 	github.com/docker/leadership v0.1.0
 	github.com/docker/libkv v0.2.1
 	github.com/evanphx/json-patch v5.6.0+incompatible
-	github.com/golang/mock v1.4.0
+	github.com/golang/mock v1.6.0
 	github.com/google/go-cmp v0.5.8
 	github.com/hashicorp/consul/api v1.13.1
 	github.com/lib/pq v1.10.6
