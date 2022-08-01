@@ -9,7 +9,7 @@ require (
 	github.com/google/go-cmp v0.5.8
 	github.com/hashicorp/consul/api v1.13.1
 	github.com/lib/pq v1.10.6
-	github.com/mattn/go-isatty v0.0.12
+	github.com/mattn/go-isatty v0.0.14
 	github.com/mitchellh/copystructure v1.2.0
 	github.com/prometheus/client_golang v1.12.2
 	github.com/satori/go.uuid v1.2.0
