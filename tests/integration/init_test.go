@@ -26,7 +26,7 @@ import (
 	"stolon/internal/common"
 	"stolon/internal/store"
 
-	uuid "github.com/satori/go.uuid"
+	"github.com/gofrs/uuid"
 )
 
 func TestInit(t *testing.T) {
@@ -43,7 +43,7 @@ func TestInit(t *testing.T) {
 
 	storeEndpoints := fmt.Sprintf("%s:%s", tstore.listenAddress, tstore.port)
 
-	clusterName := uuid.NewV4().String()
+	clusterName := uuid.Must(uuid.NewV4()).String()
 
 	initialClusterSpec := &cluster.ClusterSpec{
 		InitMode:           cluster.ClusterInitModeP(cluster.ClusterInitModeNew),
@@ -92,7 +92,7 @@ func TestInitNewNoMerge(t *testing.T) {
 }
 
 func testInitNew(t *testing.T, merge bool) {
-	clusterName := uuid.NewV4().String()
+	clusterName := uuid.Must(uuid.NewV4()).String()
 
 	dir, err := os.MkdirTemp("", "")
 	if err != nil {
@@ -171,7 +171,7 @@ func TestInitExistingNoMerge(t *testing.T) {
 }
 
 func testInitExisting(t *testing.T, merge bool) {
-	clusterName := uuid.NewV4().String()
+	clusterName := uuid.Must(uuid.NewV4()).String()
 
 	dir, err := os.MkdirTemp("", "")
 	if err != nil {
@@ -317,7 +317,7 @@ func TestInitUsers(t *testing.T) {
 	storeEndpoints := fmt.Sprintf("%s:%s", tstore.listenAddress, tstore.port)
 
 	// Test pg-repl-username == pg-su-username but password different
-	clusterName := uuid.NewV4().String()
+	clusterName := uuid.Must(uuid.NewV4()).String()
 	tk, err := NewTestKeeper(t, dir, clusterName, "user01", "password01", "user01", "password02", tstore.storeBackend, storeEndpoints)
 	if err != nil {
 		t.Fatalf("unexpected err: %v", err)
@@ -331,7 +331,7 @@ func TestInitUsers(t *testing.T) {
 	}
 
 	// Test pg-repl-username == pg-su-username
-	clusterName = uuid.NewV4().String()
+	clusterName = uuid.Must(uuid.NewV4()).String()
 	storePath := filepath.Join(common.StorePrefix, clusterName)
 
 	sm := store.NewKVBackedStore(tstore.store, storePath)
@@ -374,7 +374,7 @@ func TestInitUsers(t *testing.T) {
 	}
 
 	// Test pg-repl-username != pg-su-username and pg-su-password defined
-	clusterName = uuid.NewV4().String()
+	clusterName = uuid.Must(uuid.NewV4()).String()
 	storePath = filepath.Join(common.StorePrefix, clusterName)
 
 	sm = store.NewKVBackedStore(tstore.store, storePath)
@@ -420,7 +420,7 @@ func TestInitialClusterSpec(t *testing.T) {
 	tstore := setupStore(t, dir)
 	defer tstore.Stop()
 
-	clusterName := uuid.NewV4().String()
+	clusterName := uuid.Must(uuid.NewV4()).String()
 
 	storeEndpoints := fmt.Sprintf("%s:%s", tstore.listenAddress, tstore.port)
 	storePath := filepath.Join(common.StorePrefix, clusterName)
@@ -484,7 +484,7 @@ func TestExclusiveLock(t *testing.T) {
 	storeEndpoints := fmt.Sprintf("%s:%s", tstore.listenAddress, tstore.port)
 	defer tstore.Stop()
 
-	clusterName := uuid.NewV4().String()
+	clusterName := uuid.Must(uuid.NewV4()).String()
 
 	u := uuid.NewV4()
 	id := fmt.Sprintf("%x", u[:4])
@@ -540,7 +540,7 @@ func TestPasswordTrailingNewLine(t *testing.T) {
 	storeEndpoints := fmt.Sprintf("%s:%s", tstore.listenAddress, tstore.port)
 	defer tstore.Stop()
 
-	clusterName := uuid.NewV4().String()
+	clusterName := uuid.Must(uuid.NewV4()).String()
 
 	u := uuid.NewV4()
 	id := fmt.Sprintf("%x", u[:4])

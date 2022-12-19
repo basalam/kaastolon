@@ -27,7 +27,7 @@ import (
 	"stolon/internal/common"
 	"stolon/internal/store"
 
-	uuid "github.com/satori/go.uuid"
+	"github.com/gofrs/uuid"
 )
 
 func TestPITR(t *testing.T) {
@@ -63,7 +63,7 @@ func testPITR(t *testing.T, recoveryTarget bool) {
 
 	storeEndpoints := fmt.Sprintf("%s:%s", tstore.listenAddress, tstore.port)
 
-	clusterName := uuid.NewV4().String()
+	clusterName := uuid.Must(uuid.NewV4()).String()
 
 	storePath := filepath.Join(common.StorePrefix, clusterName)
 

@@ -26,7 +26,7 @@ import (
 	"stolon/internal/common"
 	"stolon/internal/store"
 
-	uuid "github.com/satori/go.uuid"
+	"github.com/gofrs/uuid"
 )
 
 func TestServerParameters(t *testing.T) {
@@ -51,7 +51,7 @@ func TestServerParameters(t *testing.T) {
 	storeEndpoints := fmt.Sprintf("%s:%s", tstore.listenAddress, tstore.port)
 	defer tstore.Stop()
 
-	clusterName := uuid.NewV4().String()
+	clusterName := uuid.Must(uuid.NewV4()).String()
 
 	storePath := filepath.Join(common.StorePrefix, clusterName)
 
@@ -148,7 +148,7 @@ func TestWalLevel(t *testing.T) {
 	storeEndpoints := fmt.Sprintf("%s:%s", tstore.listenAddress, tstore.port)
 	defer tstore.Stop()
 
-	clusterName := uuid.NewV4().String()
+	clusterName := uuid.Must(uuid.NewV4()).String()
 
 	storePath := filepath.Join(common.StorePrefix, clusterName)
 
@@ -263,7 +263,7 @@ func TestWalKeepSegments(t *testing.T) {
 	storeEndpoints := fmt.Sprintf("%s:%s", tstore.listenAddress, tstore.port)
 	defer tstore.Stop()
 
-	clusterName := uuid.NewV4().String()
+	clusterName := uuid.Must(uuid.NewV4()).String()
 
 	storePath := filepath.Join(common.StorePrefix, clusterName)
 
@@ -436,7 +436,7 @@ func TestAlterSystem(t *testing.T) {
 	storeEndpoints := fmt.Sprintf("%s:%s", tstore.listenAddress, tstore.port)
 	defer tstore.Stop()
 
-	clusterName := uuid.NewV4().String()
+	clusterName := uuid.Must(uuid.NewV4()).String()
 
 	storePath := filepath.Join(common.StorePrefix, clusterName)
 
@@ -508,7 +508,7 @@ func TestAdditionalReplicationSlots(t *testing.T) {
 	}
 	defer os.RemoveAll(dir)
 
-	clusterName := uuid.NewV4().String()
+	clusterName := uuid.Must(uuid.NewV4()).String()
 
 	tks, tss, tp, tstore := setupServers(t, clusterName, dir, 2, 1, false, false, nil)
 	defer shutdown(tks, tss, tp, tstore)
@@ -657,7 +657,7 @@ func TestAutomaticPgRestart(t *testing.T) {
 	storeEndpoints := fmt.Sprintf("%s:%s", tstore.listenAddress, tstore.port)
 	defer tstore.Stop()
 
-	clusterName := uuid.NewV4().String()
+	clusterName := uuid.Must(uuid.NewV4()).String()
 
 	storePath := filepath.Join(common.StorePrefix, clusterName)
 
@@ -781,7 +781,7 @@ func TestAdvertise(t *testing.T) {
 	storeEndpoints := fmt.Sprintf("%s:%s", tstore.listenAddress, tstore.port)
 	defer tstore.Stop()
 
-	clusterName := uuid.NewV4().String()
+	clusterName := uuid.Must(uuid.NewV4()).String()
 
 	storePath := filepath.Join(common.StorePrefix, clusterName)
 

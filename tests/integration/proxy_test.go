@@ -27,7 +27,7 @@ import (
 	"stolon/internal/common"
 	"stolon/internal/store"
 
-	uuid "github.com/satori/go.uuid"
+	"github.com/gofrs/uuid"
 )
 
 func TestProxyListening(t *testing.T) {
@@ -39,7 +39,7 @@ func TestProxyListening(t *testing.T) {
 	}
 	defer os.RemoveAll(dir)
 
-	clusterName := uuid.NewV4().String()
+	clusterName := uuid.Must(uuid.NewV4()).String()
 
 	tstore, err := NewTestStore(t, dir)
 	if err != nil {

@@ -38,8 +38,8 @@ import (
 	"stolon/internal/store"
 	"stolon/internal/util"
 
+	"github.com/gofrs/uuid"
 	_ "github.com/lib/pq"
-	uuid "github.com/satori/go.uuid"
 	"github.com/sgotti/gexpect"
 )
 

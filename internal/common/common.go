@@ -22,7 +22,7 @@ import (
 	"reflect"
 	"strings"
 
-	uuid "github.com/satori/go.uuid"
+	"github.com/gofrs/uuid"
 )
 
 const (
@@ -54,7 +54,7 @@ func UID() string {
 }
 
 func UUID() string {
-	return uuid.NewV4().String()
+	return uuid.Must(uuid.NewV4()).String()
 }
 
 const (

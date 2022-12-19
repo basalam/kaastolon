@@ -1,7 +1,6 @@
 name: publish
 
-on:
-  push
+on: push
 
 jobs:
   publish-docker-image:
@@ -9,20 +8,20 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 
-    - name: Login to GitHub Container Registry
-      uses: docker/login-action@v1
-      with:
-        registry: ghcr.io
-        username: ${{ github.actor }}
-        password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Build & Push Docker image
-      run: |
-        IMAGE_BASE="ghcr.io/basalam/kaastolon:$GITHUB_REF_NAME"
-        for PG_VERSION in {10..14}
-        do
-          make PGVERSION=${PG_VERSION} TAG=${IMAGE_BASE}-pg${PG_VERSION} docker
-          docker push ${IMAGE_BASE}-pg${PG_VERSION}
-        done
+      - name: Build & Push Docker image
+        run: |
+          IMAGE_BASE="ghcr.io/basalam/kaastolon:$GITHUB_REF_NAME"
+          for PG_VERSION in {10..15}
+          do
+            make PGVERSION=${PG_VERSION} TAG=${IMAGE_BASE}-pg${PG_VERSION} docker
+            docker push ${IMAGE_BASE}-pg${PG_VERSION}
+          done
