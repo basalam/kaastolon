@@ -421,7 +421,11 @@ func NewTestKeeperWithID(t *testing.T, dir, uid, clusterName, pgSUUsername, pgSU
 }
 
 func NewTestKeeper(t *testing.T, dir, clusterName, pgSUUsername, pgSUPassword, pgReplUsername, pgReplPassword string, storeBackend store.Backend, storeEndpoints string, a ...string) (*TestKeeper, error) {
-	u := uuid.NewV4()
+	// Will return error when there is io error
+	u, err := uuid.NewV4()
+	if err != nil {
+		return nil, fmt.Errorf("unable to generate UUID mostly (IO Problem), %v", err)
+	}
 	uid := fmt.Sprintf("%x", u[:4])
 
 	return NewTestKeeperWithID(t, dir, uid, clusterName, pgSUUsername, pgSUPassword, pgReplUsername, pgReplPassword, storeBackend, storeEndpoints, a...)
@@ -708,7 +712,11 @@ type TestSentinel struct {
 }
 
 func NewTestSentinel(t *testing.T, dir string, clusterName string, storeBackend store.Backend, storeEndpoints string, a ...string) (*TestSentinel, error) {
-	u := uuid.NewV4()
+	// Will return error when there is io error
+	u, err := uuid.NewV4()
+	if err != nil {
+		return nil, fmt.Errorf("unable to generate UUID mostly (IO Problem), %v", err)
+	}
 	uid := fmt.Sprintf("%x", u[:4])
 
 	args := []string{}
@@ -747,7 +755,11 @@ type TestProxy struct {
 }
 
 func NewTestProxy(t *testing.T, dir string, clusterName, pgSUUsername, pgSUPassword, pgReplUsername, pgReplPassword string, storeBackend store.Backend, storeEndpoints string, a ...string) (*TestProxy, error) {
-	u := uuid.NewV4()
+	// Will return error when there is io error
+	u, err := uuid.NewV4()
+	if err != nil {
+		return nil, fmt.Errorf("unable to generate UUID mostly (IO Problem), %v", err)
+	}
 	uid := fmt.Sprintf("%x", u[:4])
 
 	listenAddress, port, err := getFreePort(true, false)
@@ -936,7 +948,11 @@ func NewTestStore(t *testing.T, dir string, a ...string) (*TestStore, error) {
 }
 
 func NewTestEtcd(t *testing.T, dir string, backend store.Backend, a ...string) (*TestStore, error) {
-	u := uuid.NewV4()
+	// Will return error when there is io error
+	u, err := uuid.NewV4()
+	if err != nil {
+		return nil, fmt.Errorf("unable to generate UUID mostly (IO Problem), %v", err)
+	}
 	uid := fmt.Sprintf("%x", u[:4])
 
 	dataDir := filepath.Join(dir, fmt.Sprintf("etcd%s", uid))
@@ -994,7 +1010,11 @@ func NewTestEtcd(t *testing.T, dir string, backend store.Backend, a ...string) (
 }
 
 func NewTestConsul(t *testing.T, dir string, a ...string) (*TestStore, error) {
-	u := uuid.NewV4()
+	// Will return error when there is io error
+	u, err := uuid.NewV4()
+	if err != nil {
+		return nil, fmt.Errorf("unable to generate UUID mostly (IO Problem), %v", err)
+	}
 	uid := fmt.Sprintf("%x", u[:4])
 
 	dataDir := filepath.Join(dir, fmt.Sprintf("consul%s", uid))

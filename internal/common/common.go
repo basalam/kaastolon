@@ -49,7 +49,11 @@ var Roles = []Role{
 }
 
 func UID() string {
-	u := uuid.NewV4()
+	// Will return error when there is io error
+	u, err := uuid.NewV4()
+	if err != nil {
+		panic(fmt.Sprintf("Unable to generate UUID mostly (IO Problem), %v", err))
+	}
 	return fmt.Sprintf("%x", u[:4])
 }
 
