@@ -17,7 +17,6 @@ package integration
 import (
 	"context"
 	"fmt"
-	"io/ioutil"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -44,17 +43,17 @@ func TestPITRRecoveryTarget(t *testing.T) {
 }
 
 func testPITR(t *testing.T, recoveryTarget bool) {
-	dir, err := ioutil.TempDir("", "stolon")
+	dir, err := os.MkdirTemp("", "stolon")
 	if err != nil {
 		t.Fatalf("unexpected err: %v", err)
 	}
 	defer os.RemoveAll(dir)
 
-	baseBackupDir, err := ioutil.TempDir(dir, "basebackup")
+	baseBackupDir, err := os.MkdirTemp(dir, "basebackup")
 	if err != nil {
 		t.Fatalf("unexpected err: %v", err)
 	}
-	archiveBackupDir, err := ioutil.TempDir(dir, "archivebackup")
+	archiveBackupDir, err := os.MkdirTemp(dir, "archivebackup")
 	if err != nil {
 		t.Fatalf("unexpected err: %v", err)
 	}
@@ -123,8 +122,8 @@ func testPITR(t *testing.T, recoveryTarget bool) {
 	// save current time used to define recovery_target_time
 	now := time.Now()
 
-	// ioutil.Tempfile already creates files with 0600 permissions
-	pgpass, err := ioutil.TempFile("", "pgpass")
+	// os.CreateTemp already creates files with 0600 permissions
+	pgpass, err := os.CreateTemp("", "pgpass")
 	if err != nil {
 		t.Fatalf("unexpected err: %v", err)
 	}

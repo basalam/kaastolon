@@ -17,7 +17,6 @@ package integration
 import (
 	"context"
 	"fmt"
-	"io/ioutil"
 	"os"
 	"path/filepath"
 	"testing"
@@ -33,7 +32,7 @@ import (
 func TestInit(t *testing.T) {
 	t.Parallel()
 
-	dir, err := ioutil.TempDir("", "")
+	dir, err := os.MkdirTemp("", "")
 	if err != nil {
 		t.Fatalf("unexpected err: %v", err)
 	}
@@ -95,7 +94,7 @@ func TestInitNewNoMerge(t *testing.T) {
 func testInitNew(t *testing.T, merge bool) {
 	clusterName := uuid.NewV4().String()
 
-	dir, err := ioutil.TempDir("", "")
+	dir, err := os.MkdirTemp("", "")
 	if err != nil {
 		t.Fatalf("unexpected err: %v", err)
 	}
@@ -174,7 +173,7 @@ func TestInitExistingNoMerge(t *testing.T) {
 func testInitExisting(t *testing.T, merge bool) {
 	clusterName := uuid.NewV4().String()
 
-	dir, err := ioutil.TempDir("", "")
+	dir, err := os.MkdirTemp("", "")
 	if err != nil {
 		t.Fatalf("unexpected err: %v", err)
 	}
@@ -306,7 +305,7 @@ func testInitExisting(t *testing.T, merge bool) {
 func TestInitUsers(t *testing.T) {
 	t.Parallel()
 
-	dir, err := ioutil.TempDir("", "")
+	dir, err := os.MkdirTemp("", "")
 	if err != nil {
 		t.Fatalf("unexpected err: %v", err)
 	}
@@ -412,7 +411,7 @@ func TestInitUsers(t *testing.T) {
 func TestInitialClusterSpec(t *testing.T) {
 	t.Parallel()
 
-	dir, err := ioutil.TempDir("", "")
+	dir, err := os.MkdirTemp("", "")
 	if err != nil {
 		t.Fatalf("unexpected err: %v", err)
 	}
@@ -466,7 +465,7 @@ func TestInitialClusterSpec(t *testing.T) {
 func TestExclusiveLock(t *testing.T) {
 	t.Parallel()
 
-	dir, err := ioutil.TempDir("", "")
+	dir, err := os.MkdirTemp("", "")
 	if err != nil {
 		t.Fatalf("unexpected err: %v", err)
 	}
@@ -522,7 +521,7 @@ func TestExclusiveLock(t *testing.T) {
 func TestPasswordTrailingNewLine(t *testing.T) {
 	t.Parallel()
 
-	dir, err := ioutil.TempDir("", "")
+	dir, err := os.MkdirTemp("", "")
 	if err != nil {
 		t.Fatalf("unexpected err: %v", err)
 	}

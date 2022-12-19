@@ -16,7 +16,6 @@ package integration
 
 import (
 	"fmt"
-	"io/ioutil"
 	"os"
 	"path/filepath"
 	"testing"
@@ -32,7 +31,7 @@ import (
 func TestInitStandbyCluster(t *testing.T) {
 	t.Parallel()
 
-	dir, err := ioutil.TempDir("", "stolon")
+	dir, err := os.MkdirTemp("", "stolon")
 	if err != nil {
 		t.Fatalf("unexpected err: %v", err)
 	}
@@ -97,7 +96,7 @@ func TestInitStandbyCluster(t *testing.T) {
 	storePath := filepath.Join(common.StorePrefix, clusterName)
 	sm := store.NewKVBackedStore(tstore.store, storePath)
 
-	pgpass, err := ioutil.TempFile(dir, "pgpass")
+	pgpass, err := os.CreateTemp(dir, "pgpass")
 	if err != nil {
 		t.Fatalf("unexpected err: %v", err)
 	}
@@ -165,7 +164,7 @@ func TestInitStandbyCluster(t *testing.T) {
 func TestPromoteStandbyCluster(t *testing.T) {
 	t.Parallel()
 
-	dir, err := ioutil.TempDir("", "stolon")
+	dir, err := os.MkdirTemp("", "stolon")
 	if err != nil {
 		t.Fatalf("unexpected err: %v", err)
 	}
@@ -230,7 +229,7 @@ func TestPromoteStandbyCluster(t *testing.T) {
 	storePath := filepath.Join(common.StorePrefix, clusterName)
 	sm := store.NewKVBackedStore(tstore.store, storePath)
 
-	pgpass, err := ioutil.TempFile(dir, "pgpass")
+	pgpass, err := os.CreateTemp(dir, "pgpass")
 	if err != nil {
 		t.Fatalf("unexpected err: %v", err)
 	}
@@ -309,13 +308,13 @@ func TestPromoteStandbyCluster(t *testing.T) {
 func TestPromoteStandbyClusterArchiveRecovery(t *testing.T) {
 	t.Parallel()
 
-	dir, err := ioutil.TempDir("", "stolon")
+	dir, err := os.MkdirTemp("", "stolon")
 	if err != nil {
 		t.Fatalf("unexpected err: %v", err)
 	}
 	defer os.RemoveAll(dir)
 
-	archiveBackupDir, err := ioutil.TempDir(dir, "archivebackup")
+	archiveBackupDir, err := os.MkdirTemp(dir, "archivebackup")
 	if err != nil {
 		t.Fatalf("unexpected err: %v", err)
 	}
@@ -383,7 +382,7 @@ func TestPromoteStandbyClusterArchiveRecovery(t *testing.T) {
 	storePath := filepath.Join(common.StorePrefix, clusterName)
 	sm := store.NewKVBackedStore(tstore.store, storePath)
 
-	pgpass, err := ioutil.TempFile(dir, "pgpass")
+	pgpass, err := os.CreateTemp(dir, "pgpass")
 	if err != nil {
 		t.Fatalf("unexpected err: %v", err)
 	}

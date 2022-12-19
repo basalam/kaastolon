@@ -18,7 +18,6 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
 	"math/rand"
 	"net/http"
 	"os"
@@ -1762,7 +1761,7 @@ type Sentinel struct {
 func NewSentinel(uid string, cfg *config, end chan bool) (*Sentinel, error) {
 	var initialClusterSpec *cluster.ClusterSpec
 	if cfg.initialClusterSpecFile != "" {
-		configData, err := ioutil.ReadFile(cfg.initialClusterSpecFile)
+		configData, err := os.ReadFile(cfg.initialClusterSpecFile)
 		if err != nil {
 			return nil, fmt.Errorf("cannot read provided initial cluster config file: %v", err)
 		}

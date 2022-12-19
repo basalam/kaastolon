@@ -18,7 +18,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"os"
 
 	cmdcommon "stolon/cmd"
@@ -83,12 +83,12 @@ func update(cmd *cobra.Command, args []string) {
 	} else {
 		var err error
 		if updateOpts.file == "-" {
-			data, err = ioutil.ReadAll(os.Stdin)
+			data, err = io.ReadAll(os.Stdin)
 			if err != nil {
 				die("cannot read from stdin: %v", err)
 			}
 		} else {
-			data, err = ioutil.ReadFile(updateOpts.file)
+			data, err = os.ReadFile(updateOpts.file)
 			if err != nil {
 				die("cannot read file: %v", err)
 			}

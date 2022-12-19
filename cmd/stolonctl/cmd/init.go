@@ -17,7 +17,7 @@ package cmd
 import (
 	"context"
 	"encoding/json"
-	"io/ioutil"
+	"io"
 	"os"
 
 	cmdcommon "stolon/cmd"
@@ -63,12 +63,12 @@ func initCluster(cmd *cobra.Command, args []string) {
 			dataSupplied = true
 			var err error
 			if initOpts.file == "-" {
-				data, err = ioutil.ReadAll(os.Stdin)
+				data, err = io.ReadAll(os.Stdin)
 				if err != nil {
 					die("cannot read from stdin: %v", err)
 				}
 			} else {
-				data, err = ioutil.ReadFile(initOpts.file)
+				data, err = os.ReadFile(initOpts.file)
 				if err != nil {
 					die("cannot read file: %v", err)
 				}
