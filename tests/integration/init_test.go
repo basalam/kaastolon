@@ -486,7 +486,10 @@ func TestExclusiveLock(t *testing.T) {
 
 	clusterName := uuid.Must(uuid.NewV4()).String()
 
-	u := uuid.NewV4()
+	u, err := uuid.NewV4()
+	if err != nil {
+		t.Fatalf("unexpected err while generating uuid: %v", err)
+	}
 	id := fmt.Sprintf("%x", u[:4])
 
 	tk1, err := NewTestKeeperWithID(t, dir, id, clusterName, pgSUUsername, pgSUPassword, pgReplUsername, pgReplPassword, tstore.storeBackend, storeEndpoints)
@@ -542,7 +545,10 @@ func TestPasswordTrailingNewLine(t *testing.T) {
 
 	clusterName := uuid.Must(uuid.NewV4()).String()
 
-	u := uuid.NewV4()
+	u, err := uuid.NewV4()
+	if err != nil {
+		t.Fatalf("unexpected err while generating uuid: %v", err)
+	}
 	id := fmt.Sprintf("%x", u[:4])
 
 	pgSUPassword := "stolon_superuserpassword\n"
