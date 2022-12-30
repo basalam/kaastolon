@@ -61,6 +61,7 @@ type SentinelStatus struct {
 type ProxyStatus struct {
 	UID        string `json:"uid"`
 	Generation int64  `json:"generation"`
+	SlaveMode  bool   `json:"slaveMode"`
 }
 
 type KeeperStatus struct {
@@ -134,9 +135,9 @@ func renderText(status Status, generateErr error) {
 	if len(status.Proxies) == 0 {
 		stdout("No active proxies")
 	} else {
-		fmt.Fprintf(tabOut, "ID\n")
+		fmt.Fprintf(tabOut, "ID\tSLAVE MODE\n")
 		for _, p := range status.Proxies {
-			fmt.Fprintf(tabOut, "%s\n", p.UID)
+			fmt.Fprintf(tabOut, "%s\t%t\n", p.UID, p.SlaveMode)
 			tabOut.Flush()
 		}
 	}
@@ -273,7 +274,7 @@ func generateStatus() (Status, error) {
 	proxies := make([]ProxyStatus, 0)
 	sort.Sort(proxiesInfoSlice)
 	for _, pi := range proxiesInfoSlice {
-		proxies = append(proxies, ProxyStatus{UID: pi.UID, Generation: pi.Generation})
+		proxies = append(proxies, ProxyStatus{UID: pi.UID, Generation: pi.Generation, SlaveMode: pi.SlaveMode})
 	}
 	status.Proxies = proxies
 

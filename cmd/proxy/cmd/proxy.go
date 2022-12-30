@@ -185,6 +185,7 @@ func (c *ClusterChecker) SetProxyInfo(e store.Store, generation int64, proxyTime
 		UID:          c.uid,
 		Generation:   generation,
 		ProxyTimeout: proxyTimeout,
+		SlaveMode:    cfg.slaveNode,
 	}
 	log.Debugf("proxyInfo dump: %s", spew.Sdump(proxyInfo))
 

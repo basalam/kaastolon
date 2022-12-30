@@ -143,6 +143,8 @@ type ProxyInfo struct {
 	// It's used by the sentinel to know for how much time the
 	// proxy should be considered active.
 	ProxyTimeout time.Duration
+
+	SlaveMode bool
 }
 
 type ProxiesInfo map[string]*ProxyInfo
