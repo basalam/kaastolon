@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: stolon-proxy
-          image: ghcr.io/basalam/kaastolon:v0.19.2-pg10
+          image: ghcr.io/basalam/kaastolon:v0.20.0-pg10
           command:
             - "/bin/bash"
             - "-ec"
