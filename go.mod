@@ -4,7 +4,7 @@ require (
 	github.com/davecgh/go-spew v1.1.1
 	github.com/docker/leadership v0.1.0
 	github.com/docker/libkv v0.2.1
-	github.com/evanphx/json-patch v4.5.0+incompatible
+	github.com/evanphx/json-patch v4.9.0+incompatible
 	github.com/gofrs/uuid v4.3.1+incompatible
 	github.com/golang/mock v1.4.0
 	github.com/google/go-cmp v0.4.0
@@ -19,9 +19,9 @@ require (
 	github.com/spf13/pflag v1.0.5
 	go.etcd.io/etcd v0.0.0-20201125193152-8a03d2e9614b
 	go.uber.org/zap v1.13.0
-	k8s.io/api v0.17.3
-	k8s.io/apimachinery v0.17.3
-	k8s.io/client-go v0.17.3
+	k8s.io/api v0.17.16
+	k8s.io/apimachinery v0.17.16
+	k8s.io/client-go v0.17.16
 )
 
 require (
@@ -94,7 +94,7 @@ require (
 	gopkg.in/yaml.v2 v2.2.8 // indirect
 	honnef.co/go/tools v0.0.1-2019.2.3 // indirect
 	k8s.io/klog v1.0.0 // indirect
-	k8s.io/kube-openapi v0.0.0-20191107075043-30be4d16710a // indirect
+	k8s.io/kube-openapi v0.0.0-20200410145947-bcb3869e6f29 // indirect
 	k8s.io/utils v0.0.0-20191114184206-e782cd3c129f // indirect
 	sigs.k8s.io/yaml v1.1.0 // indirect
 )
