@@ -2206,7 +2206,7 @@ func keeper(c *cobra.Command, args []string) {
 		go func() {
 			err = http.ListenAndServe(cfg.HealthProbeListenAddress, probeServer)
 			if err != nil {
-				log.Errorw("metrics http server error", zap.Error(err))
+				log.Errorw("probe http server error", zap.Error(err))
 				cancel()
 			}
 		}()

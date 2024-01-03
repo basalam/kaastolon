@@ -2006,9 +2006,10 @@ func sentinel(c *cobra.Command, args []string) {
 	go sigHandler(sigs, cancel)
 
 	if cfg.MetricsListenAddress != "" {
-		http.Handle("/metrics", promhttp.Handler())
+		metricServer := http.NewServeMux()
+		metricServer.Handle("/metrics", promhttp.Handler())
 		go func() {
-			err := http.ListenAndServe(cfg.MetricsListenAddress, nil)
+			err := http.ListenAndServe(cfg.MetricsListenAddress, metricServer)
 			if err != nil {
 				log.Errorw("metrics http server error", zap.Error(err))
 				cancel()
@@ -2020,6 +2021,70 @@ func sentinel(c *cobra.Command, args []string) {
 	if err != nil {
 		log.Fatalf("cannot create sentinel: %v", err)
 	}
+
+	if cfg.HealthProbeListenAddress != "" {
+		probeServer := http.NewServeMux()
+		probeServer.HandleFunc("/healthz", func(w http.ResponseWriter, r *http.Request) {
+			w.WriteHeader(http.StatusOK)
+			w.Write([]byte(`I'm Healthy`))
+			return
+		})
+		probeServer.HandleFunc("/readyz", func(w http.ResponseWriter, r *http.Request) {
+			e, err := cmd.NewStore(&cfg.CommonConfig)
+			if err != nil {
+				w.WriteHeader(http.StatusInternalServerError)
+				w.Write([]byte(fmt.Sprintf("unable to create store %v", err.Error())))
+				return
+			}
+
+			election, err := cmd.NewElection(&cfg.CommonConfig, "")
+			if err != nil {
+				w.WriteHeader(http.StatusInternalServerError)
+				w.Write([]byte(fmt.Sprintf("unable to create election %v", err.Error())))
+				return
+			}
+
+			lsid, err := election.Leader()
+			if err != nil && err != store.ErrElectionNoLeader {
+				w.WriteHeader(http.StatusInternalServerError)
+				w.Write([]byte(fmt.Sprintf("unable get leader from election %v", err.Error())))
+				return
+			}
+
+			sentinelsInfo, err := e.GetSentinelsInfo(context.TODO())
+			if err != nil {
+				w.WriteHeader(http.StatusInternalServerError)
+				w.Write([]byte(fmt.Sprintf("unable to get sentinel info %v", err.Error())))
+				return
+			}
+
+			hasLeader := false
+			for _, si := range sentinelsInfo {
+				leader := lsid != "" && si.UID == lsid
+				if leader {
+					hasLeader = true
+					break
+				}
+			}
+
+			if !hasLeader {
+				w.WriteHeader(http.StatusInternalServerError)
+				w.Write([]byte("we have no leader"))
+				return
+			}
+			w.WriteHeader(http.StatusOK)
+			w.Write([]byte(`I'm ready`))
+			return
+		})
+		go func() {
+			err = http.ListenAndServe(cfg.HealthProbeListenAddress, probeServer)
+			if err != nil {
+				log.Errorw("probe http server error", zap.Error(err))
+				cancel()
+			}
+		}()
+	}
+
 	go s.Start(ctx)
 
 	// Ensure we collect Sentinel metrics prior to providing Prometheus with an update
