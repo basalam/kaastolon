@@ -29,6 +29,8 @@ For an introduction to stolon you can also take a look at [this post](https://sg
 
 - an extra argument for connecting to slave nodes (in kubernetes you can add extra service and deployment for proxy with that one)
 - added simple round robin for selecting slave node
+- add PostgreSQL 16 support (drop PostgreSQL 10 support)
+- probe api added (with `/readyz` and `/healthz` endpoints)
 
 #### Realesed and docker images are published ;)
 
