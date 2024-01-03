@@ -456,9 +456,10 @@ func proxy(c *cobra.Command, args []string) {
 	log.Infow("proxy uid", "uid", uid)
 
 	if cfg.MetricsListenAddress != "" {
-		http.Handle("/metrics", promhttp.Handler())
+		metricServer := http.NewServeMux()
+		metricServer.Handle("/metrics", promhttp.Handler())
 		go func() {
-			err := http.ListenAndServe(cfg.MetricsListenAddress, nil)
+			err := http.ListenAndServe(cfg.MetricsListenAddress, metricServer)
 			if err != nil {
 				log.Fatalf("metrics http server error", zap.Error(err))
 			}
@@ -468,6 +469,27 @@ func proxy(c *cobra.Command, args []string) {
 	clusterChecker, err := NewClusterChecker(uid, cfg)
 	if err != nil {
 		log.Fatalf("cannot create cluster checker: %v", err)
+	}
+
+	// TODO: make it better (needs some refactors to have state available)
+	if cfg.HealthProbeListenAddress != "" {
+		probeServer := http.NewServeMux()
+		probeServer.HandleFunc("/healthz", func(w http.ResponseWriter, r *http.Request) {
+			w.WriteHeader(http.StatusOK)
+			w.Write([]byte(`I'm Healthy`))
+			return
+		})
+		probeServer.HandleFunc("/readyz", func(w http.ResponseWriter, r *http.Request) {
+			w.WriteHeader(http.StatusOK)
+			w.Write([]byte(`I'm ready`))
+			return
+		})
+		go func() {
+			err = http.ListenAndServe(cfg.HealthProbeListenAddress, probeServer)
+			if err != nil {
+				log.Fatalf("probe http server error", zap.Error(err))
+			}
+		}()
 	}
 	if err = clusterChecker.Start(); err != nil {
 		log.Fatalf("cluster checker ended with error: %v", err)

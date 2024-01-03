@@ -2110,9 +2110,10 @@ func keeper(c *cobra.Command, args []string) {
 	go sigHandler(sigs, cancel)
 
 	if cfg.MetricsListenAddress != "" {
-		http.Handle("/metrics", promhttp.Handler())
+		metricServer := http.NewServeMux()
+		metricServer.Handle("/metrics", promhttp.Handler())
 		go func() {
-			err = http.ListenAndServe(cfg.MetricsListenAddress, nil)
+			err = http.ListenAndServe(cfg.MetricsListenAddress, metricServer)
 			if err != nil {
 				log.Errorw("metrics http server error", zap.Error(err))
 				cancel()
@@ -2121,6 +2122,96 @@ func keeper(c *cobra.Command, args []string) {
 	}
 
 	p, err := NewPostgresKeeper(&cfg, end)
+
+	if cfg.HealthProbeListenAddress != "" {
+		probeServer := http.NewServeMux()
+		probeServer.HandleFunc("/healthz", func(w http.ResponseWriter, r *http.Request) {
+			var err error
+			var cd *cluster.ClusterData
+			cd, _, err = p.e.GetClusterData(context.TODO())
+			if err != nil {
+				w.WriteHeader(http.StatusInternalServerError)
+				w.Write([]byte(fmt.Sprintf("error retrieving cluster data %v", err.Error())))
+				return
+			} else if cd != nil {
+				if cd.FormatVersion != cluster.CurrentCDFormatVersion {
+					w.WriteHeader(http.StatusInternalServerError)
+					w.Write([]byte(fmt.Sprintf("unsupported clusterdata format version %v", cd.FormatVersion)))
+					return
+				} else if cd.Cluster != nil {
+					p.sleepInterval = cd.Cluster.DefSpec().SleepInterval.Duration
+					p.requestTimeout = cd.Cluster.DefSpec().RequestTimeout.Duration
+				}
+			}
+			k, ok := cd.Keepers[p.keeperLocalState.UID]
+			if !ok {
+				w.WriteHeader(http.StatusInternalServerError)
+				w.Write([]byte(fmt.Sprintf("keeper data not found in cluster")))
+				return
+			}
+
+			if !k.Status.Healthy {
+				w.WriteHeader(http.StatusInternalServerError)
+				w.Write([]byte(fmt.Sprintf("I'm not healthy yet")))
+				return
+			}
+			w.WriteHeader(http.StatusOK)
+			w.Write([]byte(`I'm Healthy`))
+		})
+		probeServer.HandleFunc("/readyz", func(w http.ResponseWriter, r *http.Request) {
+			var err error
+			var cd *cluster.ClusterData
+			cd, _, err = p.e.GetClusterData(context.TODO())
+			if err != nil {
+				w.WriteHeader(http.StatusInternalServerError)
+				w.Write([]byte(fmt.Sprintf("error retrieving cluster data %v", err.Error())))
+				return
+			} else if cd != nil {
+				if cd.FormatVersion != cluster.CurrentCDFormatVersion {
+					w.WriteHeader(http.StatusInternalServerError)
+					w.Write([]byte(fmt.Sprintf("unsupported clusterdata format version %v", cd.FormatVersion)))
+					return
+				} else if cd.Cluster != nil {
+					p.sleepInterval = cd.Cluster.DefSpec().SleepInterval.Duration
+					p.requestTimeout = cd.Cluster.DefSpec().RequestTimeout.Duration
+				}
+			}
+			k, ok := cd.Keepers[p.keeperLocalState.UID]
+			if !ok {
+				w.WriteHeader(http.StatusInternalServerError)
+				w.Write([]byte(fmt.Sprintf("keeper data not found in cluster")))
+				return
+			}
+
+			if !k.Status.Healthy {
+				w.WriteHeader(http.StatusInternalServerError)
+				w.Write([]byte(fmt.Sprintf("I'm not healthy yet")))
+				return
+			}
+			db := cd.FindDB(k)
+			if db != nil {
+				if !(db.Status.Healthy && db.Status.ListenAddress != "") {
+					w.WriteHeader(http.StatusInternalServerError)
+					w.Write([]byte(fmt.Sprintf("postgres is not ready yet")))
+					return
+				}
+			} else {
+				w.WriteHeader(http.StatusInternalServerError)
+				w.Write([]byte(fmt.Sprintf("no db assigned")))
+				return
+			}
+			w.WriteHeader(http.StatusOK)
+			w.Write([]byte(`I'm Ready`))
+		})
+		go func() {
+			err = http.ListenAndServe(cfg.HealthProbeListenAddress, probeServer)
+			if err != nil {
+				log.Errorw("probe http server error", zap.Error(err))
+				cancel()
+			}
+		}()
+	}
+
 	if err != nil {
 		log.Fatalf("cannot create keeper: %v", err)
 	}
