@@ -36,23 +36,24 @@ import (
 type CommonConfig struct {
 	IsStolonCtl bool
 
-	StoreBackend         string
-	StoreEndpoints       string
-	StorePrefix          string
-	StoreCertFile        string
-	StoreKeyFile         string
-	StoreCAFile          string
-	StoreSkipTlsVerify   bool
-	ClusterName          string
-	MetricsListenAddress string
-	LogColor             bool
-	LogLevel             string
-	Debug                bool
-	KubeResourceKind     string
-	KubeConfig           string
-	KubeContext          string
-	KubeNamespace        string
-	StoreTimeout         time.Duration
+	StoreBackend             string
+	StoreEndpoints           string
+	StorePrefix              string
+	StoreCertFile            string
+	StoreKeyFile             string
+	StoreCAFile              string
+	StoreSkipTlsVerify       bool
+	ClusterName              string
+	MetricsListenAddress     string
+	HealthProbeListenAddress string
+	LogColor                 bool
+	LogLevel                 string
+	Debug                    bool
+	KubeResourceKind         string
+	KubeConfig               string
+	KubeContext              string
+	KubeNamespace            string
+	StoreTimeout             time.Duration
 }
 
 func AddCommonFlags(cmd *cobra.Command, cfg *CommonConfig) {
@@ -66,6 +67,7 @@ func AddCommonFlags(cmd *cobra.Command, cfg *CommonConfig) {
 	cmd.PersistentFlags().BoolVar(&cfg.StoreSkipTlsVerify, "store-skip-tls-verify", false, "skip store certificate verification (insecure!!!)")
 	cmd.PersistentFlags().StringVar(&cfg.StoreCAFile, "store-ca-file", "", "verify certificates of HTTPS-enabled store servers using this CA bundle")
 	cmd.PersistentFlags().StringVar(&cfg.MetricsListenAddress, "metrics-listen-address", "", "metrics listen address i.e \"0.0.0.0:8080\" (disabled by default)")
+	cmd.PersistentFlags().StringVar(&cfg.HealthProbeListenAddress, "health-probe-listen-address", "0.0.0.0:8081", "Health probe listen address, /healthz and /readyz will be available")
 	cmd.PersistentFlags().StringVar(&cfg.KubeResourceKind, "kube-resource-kind", "", `the k8s resource kind to be used to store stolon clusterdata and do sentinel leader election (only "configmap" is currently supported)`)
 
 	if !cfg.IsStolonCtl {
