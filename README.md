@@ -55,6 +55,7 @@ Stolon is composed of 3 main components
 - keeper: it manages a PostgreSQL instance converging to the clusterview computed by the leader sentinel.
 - sentinel: it discovers and monitors keepers and proxies and computes the optimal clusterview.
 - proxy: the client's access point. It enforce connections to the right PostgreSQL master and forcibly closes connections to old masters.
+- slave proxy (optional): same as proxy but for readonly connections
 
 For more details and requirements see [Stolon Architecture and Requirements](doc/architecture.md)
 
