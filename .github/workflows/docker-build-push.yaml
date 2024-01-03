@@ -20,7 +20,7 @@ jobs:
       - name: Build & Push Docker image
         run: |
           IMAGE_BASE="ghcr.io/basalam/kaastolon:$GITHUB_REF_NAME"
-          for PG_VERSION in {10..16}
+          for PG_VERSION in {11..16}
           do
             make PGVERSION=${PG_VERSION} TAG=${IMAGE_BASE}-pg${PG_VERSION} docker
             docker push ${IMAGE_BASE}-pg${PG_VERSION}
