@@ -1,3 +1,5 @@
+# From V1.0.0 on this file will not get updated (Checkout GitHub [releases](https://github.com/basalam/kaastolon/releases))
+
 ### v0.20.0
 
 #### New features
