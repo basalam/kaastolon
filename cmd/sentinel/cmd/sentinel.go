@@ -2024,12 +2024,8 @@ func sentinel(c *cobra.Command, args []string) {
 
 	if cfg.HealthProbeListenAddress != "" {
 		probeServer := http.NewServeMux()
+
 		probeServer.HandleFunc("/healthz", func(w http.ResponseWriter, r *http.Request) {
-			w.WriteHeader(http.StatusOK)
-			w.Write([]byte(`I'm Healthy`))
-			return
-		})
-		probeServer.HandleFunc("/readyz", func(w http.ResponseWriter, r *http.Request) {
 			e, err := cmd.NewStore(&cfg.CommonConfig)
 			if err != nil {
 				w.WriteHeader(http.StatusInternalServerError)
@@ -2073,7 +2069,12 @@ func sentinel(c *cobra.Command, args []string) {
 				return
 			}
 			w.WriteHeader(http.StatusOK)
-			w.Write([]byte(`I'm ready`))
+			w.Write([]byte(`I'm Healthy`))
+			return
+		})
+		probeServer.HandleFunc("/readyz", func(w http.ResponseWriter, r *http.Request) {
+			w.WriteHeader(http.StatusOK)
+			w.Write([]byte(`I'm Ready`))
 			return
 		})
 		go func() {

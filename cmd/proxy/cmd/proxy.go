@@ -481,7 +481,7 @@ func proxy(c *cobra.Command, args []string) {
 		})
 		probeServer.HandleFunc("/readyz", func(w http.ResponseWriter, r *http.Request) {
 			w.WriteHeader(http.StatusOK)
-			w.Write([]byte(`I'm ready`))
+			w.Write([]byte(`I'm Ready`))
 			return
 		})
 		go func() {
